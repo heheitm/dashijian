@@ -28,7 +28,7 @@ $(function () {
     $('#form_reg').on('submit', function (e) {
         e.preventDefault();
         const str = $(this).serialize()
-        $.post('http://ajax.frontend.itheima.net/api/reguser', str, function (res) {
+        $.post('/api/reguser', str, function (res) {
             if (res.status !== 0) {
                 return layer.msg(res.message)
             }
@@ -43,14 +43,14 @@ $(function () {
     $('#form_login').on('submit', function (e) {
         e.preventDefault();
         const str = $(this).serialize();
-        $.post('http://ajax.frontend.itheima.net/api/login', str, function (res) {
+        $.post('/api/login', str, function (res) {
             if (res.status !== 0) {
                 return layer.msg('登录失败！')
             }
             // console.log(res);
             layer.msg('登录成功');
             //本地存贮
-            localStorage.setItem('key', res.token);// res.token相当于一个密钥 便于跳转
+            localStorage.setItem('token', res.token);// res.token相当于一个密钥 便于跳转
             location.href = '/index.html'
         })
     });
