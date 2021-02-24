@@ -7,6 +7,7 @@ $(function () {
             }
         }
     });
+
     initUserInfo();
     // 初始化用户的基本信息
     function initUserInfo() {
@@ -17,9 +18,32 @@ $(function () {
                 if (res.status !== 0) {
                     return layer.msg('获取用户信息失败！')
                 }
-                console.log(res)
+                // console.log(res);
+                form.val('formUserInfo', res.data)
             }
         })
     };
+
+    //点击
+    $('#btnReset').on('click', function (e) {
+        //阻止表单默认行为
+        e.preventDefault();
+        initUserInfo();
+    });
+
+    //更新用户信息
+    $('.layui-form').on('submit', function (e) {
+        e.preventDefault();
+        const str = $(this).serialize();
+        $.post('/my/userinfo', str, function (res) {
+            if (res.status !== 0){
+                return layer.msg('更新用户信息失败！');
+            }
+            layer.msg('更新用户信息成功！');
+         //   console.log(res);
+            // 调用父页面中的方法，重新渲染用户的头像和用户的信息
+            window.parent.getUserInfo();
+        })
+    });
 
 })
